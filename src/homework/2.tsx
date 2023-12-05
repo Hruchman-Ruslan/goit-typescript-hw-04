@@ -1,20 +1,13 @@
 import { useReducer } from "react";
 
-enum RequestStep {
-  Idle = "idle",
-  Start = "start",
-  Pending = "pending",
-  Finished = "finished",
-}
-
 interface State {
   isRequestInProgress: boolean;
-  requestStep: RequestStep;
+  requestStep: "idle" | "start" | "pending" | "finished";
 }
 
 const initialState: State = {
   isRequestInProgress: false,
-  requestStep: RequestStep.Idle,
+  requestStep: "idle",
 };
 
 type Action =
@@ -29,25 +22,25 @@ function requestReducer(state: State, action: Action): State {
       return {
         ...state,
         isRequestInProgress: true,
-        requestStep: RequestStep.Start,
+        requestStep: "start",
       };
     case "PENDING_REQUEST":
       return {
         ...state,
         isRequestInProgress: true,
-        requestStep: RequestStep.Pending,
+        requestStep: "pending",
       };
     case "FINISH_REQUEST":
       return {
         ...state,
         isRequestInProgress: false,
-        requestStep: RequestStep.Finished,
+        requestStep: "finished",
       };
     case "RESET_REQUEST":
       return {
         ...state,
         isRequestInProgress: false,
-        requestStep: RequestStep.Idle,
+        requestStep: "idle",
       };
     default:
       return state;
